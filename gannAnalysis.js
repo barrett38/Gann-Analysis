@@ -1,13 +1,7 @@
-// Import necessary Node.js libraries
 const moment = require("moment");
 const readline = require("readline");
 
-// Square of 9 Function
-function squareOf9(price, degrees) {
-  const sqrtPrice = Math.sqrt(price);
-  const newPrice = Math.pow(sqrtPrice + degrees / 360, 2);
-  return newPrice;
-}
+import { squareOf9 } from "./gannSquareOf9.js";
 
 // Square of 52 Function (Calculates key weekly time intervals)
 function squareOf52(startDate) {
@@ -23,16 +17,23 @@ function squareOf52(startDate) {
   return dates;
 }
 
+// Function to calculate date 90 days from startDate
+function date90DaysFrom(startDate) {
+  return moment(startDate).add(90, "days").format("YYYY-MM-DD");
+}
+
 // Function to run the analysis
 function gannAnalysis(startDate, price) {
   console.log("Gann Square of 9 & 52 Analysis");
 
-  // Square of 9 price projections at 90, 180, 360 degrees
+  // Square of 9 price projections at 45, 90, 180, 360 degrees
+  const price45 = squareOf9(price, 45);
   const price90 = squareOf9(price, 90);
   const price180 = squareOf9(price, 180);
   const price360 = squareOf9(price, 360);
 
   console.log(`Price projections from ${price}:`);
+  console.log(`45 degrees: ${price45.toFixed(4)}`);
   console.log(`90 degrees: ${price90.toFixed(4)}`);
   console.log(`180 degrees: ${price180.toFixed(4)}`);
   console.log(`360 degrees: ${price360.toFixed(4)}`);
@@ -43,6 +44,9 @@ function gannAnalysis(startDate, price) {
   weeks.forEach((week) => {
     console.log(`Week ${week.week}: ${week.date}`);
   });
+  // Calculate and log the date 90 days from startDate
+  const date90Days = date90DaysFrom(startDate);
+  console.log(`90 Days out: ${date90Days}`);
 }
 
 // Create readline interface
