@@ -1,7 +1,11 @@
 const moment = require("moment");
 const readline = require("readline");
 
-import { squareOf9 } from "./gannSquareOf9.js";
+function squareOf9(price, degrees) {
+  const sqrtPrice = Math.sqrt(price);
+  const newPrice = Math.pow(sqrtPrice + degrees / 360, 0.5);
+  return newPrice;
+}
 
 // Square of 52 Function (Calculates key weekly time intervals)
 function squareOf52(startDate) {
